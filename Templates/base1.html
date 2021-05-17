@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>STDSLWNGI - Pundit</title>
+    {% include "snippets/styles.html" %}
+  </head>
+    <style type="text/css">
+          .asteriskField{
+            display: none;
+          }
+        </style>
+  <body class="body">
+  {% include "snippets/navbar.html" %}
+  <!-- Page Header -->
+    <header class="masthead" style="background-image: url('{% static 'img/1.jpg' %}')">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="site-heading">
+                {% block header %}
+                
+                {% endblock header %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  <!--End Page Header --> 
+    {% block contents %}
+
+    {% endblock contents %}
+  <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <ul class="list-inline text-center">
+              <li class="list-inline-item">
+                <a href="https://twitter.com/stdsiliwangi">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://www.instagram.com/stdsiliwangi/">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://www.youtube.com/channel/UC4RjXbY7Ha5201kTbbCvqWg">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-youtube fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+            </ul>
+            <p class="copyright text-muted">Copyright stadionsiliwangi.com &copy; 2020</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    {% include "snippets/script.html" %}
+  </body>
+</html>

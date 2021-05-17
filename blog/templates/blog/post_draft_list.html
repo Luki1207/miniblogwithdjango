@@ -1,0 +1,15 @@
+{% extends 'base1.html' %}
+{% block title %}
+
+{% endblock title %}
+
+{% block contents %}
+{% for post in posts  %}
+    <div class="post">
+        {% comment %} <p class="date">created:{{post.created_date|date:'d m y'}}</p> {% endcomment %}
+        <h1><a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></h1>
+        <p>{{post.text|truncatechars:50}}</p>
+    </div>
+{% endfor %}
+
+{% endblock contents %}

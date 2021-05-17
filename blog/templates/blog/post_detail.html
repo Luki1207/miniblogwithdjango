@@ -1,0 +1,157 @@
+{% extends 'base1.html' %}
+{% block header %}
+
+    <h1>{{post.category}}</h1>
+    <span class="subheading">{{post.title}}</span>
+
+{% endblock header %}
+
+{% block contents %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="">
+                <div class= "">
+                    <h1 class="posttitle loader">{{post.title}}</h1>
+                    {% if post.published_date %}
+                        <div class="date postdate">
+                            {{post.published_date}}
+                        </div>
+                    {% else %}
+                        <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">
+                        <span class="fa-stack fa-lg">
+                            <i class="fas fa-circle fa-stack-2x"></i>
+                            <i class=" fa fa-power-off fa-stack-1x fa-inverse"></i>
+                        </span>
+                        Publish</a>
+                    {% endif %}
+
+                    <p  style = "font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;" class="postcontent">{{post.text|safe|linebreaksbr }}</p>
+                    <a classs="btn btn-info btn-comment"  href="{% url 'add_comment_to_post' pk=post.pk %}">Add Comments</a>
+
+                    {% if user.is_authenticated %}
+
+                        <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modalEditArtikel" >
+                        <span class="fa-stack fa-lg">
+                            <i class="fas fa-circle fa-stack-2x"></i>
+                            <i class=" fa fa-magic fa-stack-1x fa-inverse"></i>
+                        </span>
+                        Edit</button>
+                        <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modalRemoveArtikel" >
+                        <span class="fa-stack fa-lg">
+                            <i class="fas fa-circle fa-stack-2x"></i>
+                            <i class=" fa fa-times fa-stack-1x fa-inverse"></i>
+                        </span>
+                        Remove</button>
+                                    <!-- Modal delete Artikel-->
+                                    <div class="modal fade" id="modalEditArtikel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered " >
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Edit Artikel</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Wanna edit artikel {{post.title}} ?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
+                                                    <a type="button" class="btn btn-primary" href="{% url 'post_edit' pk=post.pk %}">yes i will</button></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Modal delete artikel -->
+                                    <!-- Modal delete Artikel-->
+                                    <div class="modal fade" id="modalRemoveArtikel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered " >
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Delete Artikel</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Wanna delete artikel {{post.title}} ?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
+                                                    <a type="button" class="btn btn-primary" href="{% url 'post_remove' pk=post.pk %}">yes i will</button></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Modal delete artikel -->
+                        {% comment %} <a classs="btn btn-danger" href="{% url 'post_remove' pk=post.pk %}">Remove</a> {% endcomment %}
+                    {% endif %}
+                    <hr>
+
+                    
+                        {% for comment in post.comments.all %}
+                        <br>
+                        {% if user.is_authenticated or comment.approved_comment %}
+                                {{ comment.created_date }}
+                                {% if not comment.approved_comment %}
+                                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modalComment" >Remove</button>
+                                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modalApprove" >Approve</button>
+                                    {% comment %} <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}">Approve</a> {% endcomment %}
+                                    <!-- Modal delete Comment-->
+                                    <div class="modal fade" id="modalComment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered " >
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Delete Comment</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Wanna delete comment from {{ comment.author }} ?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
+                                            <a type="button" class="btn btn-primary" href="{% url 'comment_remove' pk=comment.pk %}">yes i will</button></a>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <!-- End Modal delete comment -->     
+                                    <!-- Modal Approve Comment-->
+                                    <div class="modal fade" id="modalApprove" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" >
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Delete Comment</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Wanna Approve comment from {{ comment.name }} ?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
+                                            <a type="button" class="btn btn-primary" href="{% url 'comment_approve' pk=comment.pk %}">yes, approved</button></a>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <!-- End Modal Approve comment -->     
+                                {% endif %}
+                            
+                            <p>{{ comment.comment|safe|linebreaks }}</p>
+                            <p>Posted by: <strong>{{ comment.name }}</strong></p>
+                        {% endif %}
+                    {% empty %}
+                        <p> No Comments</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock contents %}

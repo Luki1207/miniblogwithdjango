@@ -1,0 +1,105 @@
+{% extends 'base1.html' %}
+{% block header %}
+    <h3>STDSILIWANGI</h3>
+    <span class="subheading">-Manage Your Artikel-</span>
+{% endblock header %}
+
+{% block contents %}
+{% if user.is_authenticated %}
+    <div class="container">
+        <a href="{% url 'manage_artikel' %}">
+            <h1 class="post_title">Manage Artikel</h1>
+        </a>
+            <form method="GET" action=".">
+                <div class="input-group input-group-sm" style="width: 300px;">
+                    <input type="search" name="title_contains" class="form-control float-left" placeholder="Search by title ya guys">
+                    <div class="input-group-append">
+                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                {% comment %} <div class="input-group input-group-sm" style="width: 300px;">
+                    <input type="search" name="category_contains" class="form-control float-right" placeholder="Search by category ya guys">
+                    <div class="input-group-append">
+                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                 {% endcomment %}
+               {% comment %} <select type="search" name="category_contains" class="form-control float-right" equired id="id_category">
+                    <option value="" selected>--------</option>
+
+                    <option value="LPM">LPM</option>
+
+                    <option value="NgaduBako">NgaduBako</option>    
+                </select>
+                    <button type="submit" class="btn btn-default"><i class="fa fa-angle-down"></i></button>        {% endcomment %}
+                
+                {% comment %} Table {% endcomment %}
+                <div class="card-body table-responsive p-0" style="height: 500px;">
+                    <table class="table table-head-fixed text-nowrap">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Author</th>
+                            <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for post in manage_artikel %}
+                                <tr>
+                                    <th scope="row">{{forloop.counter}}</th>
+                                    <td> <a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></td>
+                                    <td>{{post.category}}</td>
+                                    <td>{{post.author}}</td>
+                                    <ul>
+                                        <td>
+                                            
+                                                <a  class="badge badge-default" href="{% url 'post_remove' pk=post.pk %}">
+                                                    <span class="fa-stack fa-lg">
+                                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                                        <i class=" fa fa-times fa-stack-1x fa-inverse"></i>
+                                                    </span>
+                                                    REMOVE
+                                                </a>
+                                                <a  class="badge badge-default" href="{% url 'post_edit' pk=post.pk %}">
+                                                    <span class="fa-stack fa-lg">
+                                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                                        <i class=" fa fa-magic fa-stack-1x fa-inverse"></i>
+                                                    </span>
+                                                    EDIT
+                                                </a>
+                                                {% if post.published_date %}
+                                                    <a class="badge badge-default" href="{% url 'post_list' 1 %}"> 
+                                                        <span class="fa-stack fa-lg">
+                                                            <i class="fas fa-circle fa-stack-2x"></i>
+                                                            <i class=" fa fa-check fa-stack-1x fa-inverse"></i>
+                                                        </span>
+                                                        PUBLISHED
+                                                    </a>
+                                                {% else %}
+                                                    <a class="badge badge-default" href="{% url 'post_publish' pk=post.pk %}">
+                                                        <span class="fa-stack fa-lg">
+                                                            <i class="fas fa-circle fa-stack-2x"></i>
+                                                            <i class=" fa fa-power-off fa-stack-1x fa-inverse"></i>
+                                                        </span>
+                                                        PUBLISH
+                                                    </a>
+                                                {% endif %}
+                                            
+                                        </td>
+                                    </ul>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+{% else %}
+<meta http-equiv="refresh" content="0; {% url 'home' %}">
+{% endif %}
+{% endblock contents %}
+
+                        

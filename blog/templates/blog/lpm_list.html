@@ -1,0 +1,47 @@
+{% extends 'base1.html' %}
+{% block header %}
+    <h3>LPM</h3>
+    <span class="subheading">-Laporan Pandangan Mata-</span>
+{% endblock header %}
+
+{% block contents %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-preview">
+                    {% for post in lpm_list %}
+                        <a href="{% url 'post_detail' pk=post.pk %}">
+                            <h2 class="post_title">{{post.title}}</h2>
+                        </a>
+                        <p style = "font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;">{{post.text |safe|linebreaksbr| truncatewords:50}}</p>
+                        <a href="{% url 'post_detail' pk=post.pk %}" class="ready-btn">Continue &rarr;</a>
+                        <p class="post-meta">
+                        Category {{post.category}} |
+                        Posted by {{post.author}}
+                        on {{post.published_date|date:"d M Y"}}
+                        </p>
+                        <hr>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Pager -->
+    {% if is_paginated %}
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <div class="clearfix">
+                    <a class="btn btn-primary float-left" href="{% url 'lpm' page_obj.previous_page_number %}">&larr; Newest Post</a>
+                </div>
+            {% endif %}
+        
+            {% if page_obj.has_next %}
+                <div class="clearfix">
+                    <a class="btn btn-primary float-right" href="{% url 'lpm' page_obj.next_page_number %}">Older Posts &rarr;</a>
+                </div>
+            {% endif %}
+        </ul>
+    {% endif %}
+<!-- End Pager -->
+{% endblock contents %}
+                        

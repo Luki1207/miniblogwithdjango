@@ -1,0 +1,6 @@
+{
+    "git.ignoreLimitWarning": true,
+    "python.pythonPath": "/Users/mac/.pyenv/shims/python"
+    "workbench.colorTheme":"Noctis Minimus",
+    "workbench.iconTheme":"vscode-icons",
+}

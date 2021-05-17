@@ -1,0 +1,23 @@
+{% extends 'base1.html' %}
+{% block header %}
+ <h2>CONFIRM DELETE PAGE</h2>
+{% endblock header %}
+
+{% block contents %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="card">
+                <div class= "card-body shadow">
+                    <form method="post">
+                        {% csrf_token %}
+                        <h3> Hey! Are you fuckin sure to delete artikel {{object}}?</h3>
+                        <input type="submit" class="btn btn-danger" value="Just Fuckin do it damn it">
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contents %}

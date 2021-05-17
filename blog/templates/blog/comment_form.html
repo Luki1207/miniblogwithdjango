@@ -1,0 +1,37 @@
+{% extends 'base1.html' %}
+{% block header %}
+
+    <h1>Comments Artikel Page</h1>
+    <span class="subheading">Put Your Comment Here</span>
+
+{% endblock header %}
+
+{% block contents %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="card">
+                <div class= "card-body shadow">
+                    <h1>New Comment</h1>
+                    <form class="post-form" method="post">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <script>
+                           var editor = new MediumEditor('.editable', {
+                                placeholder: {
+                                    /* This example includes the default options for placeholder,
+                                    if nothing is passed this is what it used */
+                                    text: 'Put your comment here',
+                                    hideOnClick: false
+                                }
+                            });
+                        </script>
+                        <button type="submit" class='save btn btn-default'>Post Comment</button>
+                    </form>
+                    <script>var editor = new MediumEditor('.editable');</script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contents %}
